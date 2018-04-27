@@ -1,7 +1,7 @@
 '''
-Created on genn 2017
+Created on May 2017
 
-@author: beatrice donati
+@author: alessio ferrari
 '''
 from __future__ import division
 
@@ -47,10 +47,8 @@ class CategoryCrawler(object):
             except AttributeError:
                 print 'Error on ' + file_path + " " + str(page['pageid'])
             except PageError:
-                #self.logger.exception("Document " + str(pageid) + " Not found!")
                 print "Document " + str(page['pageid']) + " Not found!"
             except DisambiguationError:
-                #self.logger.exception("Disambiguation page discarded!")
                 print "Disambiguation page discarded!"
         return False
 
@@ -120,23 +118,6 @@ def main():
     d = CategoryCrawler()
     d.search_and_store(portal, subcategory_depth=2, path=out_path)
  
-#     inputfile = ''
-#     outputfile = ''
-#     try:
-#        opts, args = getopt.getopt(argv,"hi:o:",["keyword=","depth="])
-#     except getopt.GetoptError:
-#        print 'test.py <keyword> <depth>'
-#        sys.exit(2)
-#     for opt, arg in opts:
-#        if opt == '-h':
-#           print 'test.py -i <inputfile> -o <outputfile>'
-#           sys.exit()
-#        elif opt in ("-i", "--ifile"):
-#           inputfile = arg
-#        elif opt in ("-o", "--ofile"):
-#           outputfile = arg
-#     print 'Input file is "', inputfile
-#     print 'Output file is "', outputfile
 
 if __name__ == "__main__":
     main()
