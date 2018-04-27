@@ -56,15 +56,15 @@ def test3(title1, title2, model1, model2,threshold):#takes the n=threshold most 
     for word in comparison.frequent_common_words(model1, model2,threshold):
         test1(word, title1, title2, model1, model2)
 
-def big_training(stems, model_path, runs, size, window, min_count,iter):
-
-    if not os.path.isdir(model_path):
-        os.makedirs(model_path)
-
-    for n in range(0,runs):
-        print("Run "+ str(n) + " of " + str(runs))
-        model = vectorization.train_model_on_stems(stems, size, window, min_count,iter)
-        model.save(model_path+'/RUN_{}'.format(n))
+# def big_training(stems, model_path, runs, size, window, min_count,iter):
+# 
+#     if not os.path.isdir(model_path):
+#         os.makedirs(model_path)
+# 
+#     for n in range(0,runs):
+#         print("Run "+ str(n) + " of " + str(runs))
+#         model = vectorization.train_model_on_stems(stems, size, window, min_count,iter)
+#         model.save(model_path+'/RUN_{}'.format(n))
 
 
 
