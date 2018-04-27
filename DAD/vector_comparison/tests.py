@@ -5,8 +5,7 @@ from gensim.models import Word2Vec
 import nltk
 from nltk.stem.snowball import SnowballStemmer
 
-import comparison
-import vectorization
+from vector_comparison import vectorization, comparison
 
 
 #from sklearn.metrics.pairwise import cosine_similarityfrom
