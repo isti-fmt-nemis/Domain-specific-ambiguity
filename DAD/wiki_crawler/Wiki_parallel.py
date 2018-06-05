@@ -1,7 +1,11 @@
 '''
 Created on May 2017
 
-@author: alessio ferrari
+@author: 
+
+beatrice donati 
+
+alessio ferrari
 '''
 from __future__ import division
 
