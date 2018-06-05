@@ -10,7 +10,7 @@ from gensim.models.word2vec import Word2Vec
 from nltk.stem.wordnet import WordNetLemmatizer
 from numpy import dot
 
-from modifydomainfiles import load_common_terms    
+from domain_analysis.modifydomainfiles import load_common_terms
 from tests import language
 import vectorization
 
