@@ -12,6 +12,7 @@ from vector_comparison import vectorization
 
 CORPORA_DIR = "./DATASETS"
 MODEL_PATH = "./MODELS"
+
 SIZE = 50
 WINDOW = 10
 MIN_COUNT = 10
@@ -29,3 +30,4 @@ if __name__ == '__main__':
         MODEL_NAME = os.path.basename(os.path.normpath(corpus)) + ".bin"
         model.save(os.path.join(MODEL_PATH, MODEL_NAME))
         print "done\n\n"
+
