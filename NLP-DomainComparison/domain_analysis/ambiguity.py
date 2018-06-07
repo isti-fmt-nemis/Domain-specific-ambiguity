@@ -1,0 +1,82 @@
+import numpy as np
+import spacy
+
+nlp = spacy.load('en')
+
+
+def get_sorted_vocab(mdl):
+    with_freq = [(word, vocab_entry.count) for word, vocab_entry in mdl.wv.vocab.items()]
+    return sorted(with_freq, key=lambda x: -x[1])
+
+tags = dict()
+
+def get_tag(word):
+    if word in tags:
+        return tags[word]
+    tag = list(nlp(word))[0].tag_
+    tags[word] = tag
+    return tag
+
+def get_frequent_shared_words_spacy(domains, size=100):
+    sorted_vocabs = list()
+    for domain in domains:
+        sorted_vocabs.append(get_sorted_vocab(domain))
+    min_vocab_size = min([len(sorted_vocab) for sorted_vocab in sorted_vocabs])
+    head = size
+    while True:
+        common = set([word for word, freq in sorted_vocabs[0][:head]])
+        for sorted_vocab in sorted_vocabs[1:]:
+            common = common.intersection(set([word for word, freq in sorted_vocab[:head]]))
+        if len(common) < size:
+            head += 1
+            continue
+        to_remove = set()
+        for word in common:
+            if get_tag(word) != 'NN':
+                to_remove.add(word)
+            elif len(word) == 1:
+                to_remove.add(word)
+            elif word.isnumeric():
+                to_remove.add(word)
+        common.difference_update(to_remove)
+        if len(common) >= size or head >= min_vocab_size:
+            print(head)
+            return common
+        head += 1
+
+
+def ambiguity_mse_rank(domains, vocab_size=100, w2v_topn=100):
+    common = get_frequent_shared_words_spacy(domains, vocab_size)
+    output = list()
+    for word in common:
+        sorted_tops = list()
+        sorted_words = list()
+        tops = list()
+        for domain in domains:
+            sorted_tops.append(domain.wv.most_similar(word, topn=w2v_topn))
+            sorted_words.append([word for word, score in sorted_tops[-1]])
+            tops.append(dict(sorted_tops[-1]))
+
+        shared = set()
+        for top_word in tops:
+            shared.update(top_word.keys())
+
+        mse = 0
+        for shared_word in shared:
+            min_rank = w2v_topn + 1
+
+            for sorted_word in sorted_words:
+                try:
+                    min_rank = min(min_rank, sorted_word.index(shared_word) + 1)
+                except:
+                    pass
+            scores = list()
+            for top in tops:
+                scores.append(top.get(shared_word, 0))
+
+            mse += np.var(scores) / min_rank
+        counts = list()
+        for domain in domains:
+            counts.append(domain.wv.vocab[word].count)
+        output.append((word, len(shared), mse, counts))
+    return sorted(output, key=lambda x: -x[2])
