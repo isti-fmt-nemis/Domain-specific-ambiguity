@@ -1,3 +1,5 @@
+import itertools
+
 import numpy as np
 import spacy
 
@@ -8,7 +10,9 @@ def get_sorted_vocab(mdl):
     with_freq = [(word, vocab_entry.count) for word, vocab_entry in mdl.wv.vocab.items()]
     return sorted(with_freq, key=lambda x: -x[1])
 
+
 tags = dict()
+
 
 def get_tag(word):
     if word in tags:
@@ -16,6 +20,7 @@ def get_tag(word):
     tag = list(nlp(word))[0].tag_
     tags[word] = tag
     return tag
+
 
 def get_frequent_shared_words_spacy(domains, size=100):
     sorted_vocabs = list()
@@ -40,7 +45,7 @@ def get_frequent_shared_words_spacy(domains, size=100):
                 to_remove.add(word)
         common.difference_update(to_remove)
         if len(common) >= size or head >= min_vocab_size:
-            print(head)
+            # print(head)
             return common
         head += 1
 
@@ -80,3 +85,18 @@ def ambiguity_mse_rank(domains, vocab_size=100, w2v_topn=100):
             counts.append(domain.wv.vocab[word].count)
         output.append((word, len(shared), mse, counts))
     return sorted(output, key=lambda x: -x[2])
+
+
+def ambiguity_mse_rank_multi(domains, vocab_size=100, w2v_topn=100):
+    count = len(domains)
+    by_word = dict()
+    for size in range(2, count + 1):
+        for to_test in itertools.combinations(domains, size):
+            for word, shared, mse, counts in ambiguity_mse_rank([model for _, model in to_test], vocab_size, w2v_topn):
+                if word in by_word:
+                    prev_mse = by_word[word][2]
+                    if mse >= prev_mse:
+                        by_word[word] = ([name for name, _ in to_test], word, shared, mse, counts)
+                else:
+                    by_word[word] = ([name for name, _ in to_test], word, shared, mse, counts)
+    return sorted(by_word.values(), key=lambda x: -x[3])
