@@ -1,7 +1,8 @@
+import spacy
 import itertools
 
 import numpy as np
-import spacy
+
 
 nlp = spacy.load('en')
 

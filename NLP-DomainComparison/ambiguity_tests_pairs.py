@@ -6,7 +6,7 @@ from pprint import pprint
 import domain_analysis.ambiguity as ambiguity
 from gensim.models.word2vec import Word2Vec
 
-MODEL_PATH = ".\\MODELS"
+MODEL_PATH = "./MODELS"
 
 models = dict()
 
