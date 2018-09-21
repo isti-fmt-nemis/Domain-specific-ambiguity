@@ -50,7 +50,7 @@ def get_random_sentence(doc, w, sent_max_len = 200, sent_min_len = 50,window = 5
             if w.lower() in word_tokenize(selected[0]):
                 selected_good = True
  
-    return selected
+    return selected[0]
 
 def get_random_sentence_slow(doc, w, sent_max_len = 120):
     
@@ -66,7 +66,7 @@ def get_random_sentence_slow(doc, w, sent_max_len = 120):
             if w.lower() in word_tokenize(selected[0]):
                 selected_good = True
 
-    return selected
+    return selected[0]
 
 '''
 @param words: words for which the file shall be generated
@@ -90,3 +90,5 @@ def generate_CSV(words, domains, sent_num, file_name):
                     csv_row.append(sent_w)
                 print(csv_row)
                 csv_writer.writerow(csv_row)
+                
+                
