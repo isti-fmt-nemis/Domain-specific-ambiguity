@@ -14,8 +14,6 @@ from gensim.models.word2vec import Word2Vec
 
 MODEL_PATH = "./MODELS"
 
-
-
 TERM = 'term'
 
 
