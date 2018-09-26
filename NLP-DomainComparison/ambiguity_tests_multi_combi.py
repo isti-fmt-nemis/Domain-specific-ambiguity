@@ -18,7 +18,7 @@ models['mec'] = Word2Vec.load(os.path.join(MODEL_PATH, "Mechanical_Engineering_D
 models['lit'] = Word2Vec.load(os.path.join(MODEL_PATH, "Literature_D_2.bin"))
 
 shared_word_count = 100
-top_words_to_show = 20
+top_words_to_show = 10
 
 scenarios = {'medical_software': [('cs', models['cs']), ('med', models['med'])],
              'medical_device': [('cs', models['cs']), ('ele', models['ele']), ('med', models['med'])],
@@ -31,4 +31,5 @@ for scenario_name in scenarios:
     pprint([scenario_name, shared_word_count],width=200)
     ambiguous = ambiguity.ambiguity_mse_rank_multi(scenarios[scenario_name], shared_word_count)
     pprint(ambiguous[:top_words_to_show],width=200)
+    pprint(ambiguous[len(ambiguous)//2-top_words_to_show//2:len(ambiguous)//2+top_words_to_show//2],width=200)
     pprint(ambiguous[-top_words_to_show:],width=200)

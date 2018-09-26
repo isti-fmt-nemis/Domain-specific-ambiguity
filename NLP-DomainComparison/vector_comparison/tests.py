@@ -2,9 +2,9 @@ from glob import glob
 import os
 
 from gensim.models import Word2Vec
+
 import nltk
 from nltk.stem.snowball import SnowballStemmer
-
 from vector_comparison import vectorization, comparison
 
 
@@ -16,7 +16,7 @@ stemmer = SnowballStemmer(language)
 ############## models creation ####################################
 
 def create_model(data_path, model_path):# '../vectorAnalisysWorkspace/CS_corpus_5'
-    print '...building the vector model from '+ data_path
+    print('...building the vector model from ')+ data_path
     model = vectorization.train_model_on_dir(data_path, language, stemmer)
     model.save(model_path)
 
@@ -37,18 +37,18 @@ def create_model(data_path, model_path):# '../vectorAnalisysWorkspace/CS_corpus_
 def test1(word, title1, title2, model1, model2):#compare the same word on two models. title are string describing the models
     stem= stemmer.stem(word)
 
-    print '========[ '+ str(word)+ ' ]========'
-    print 'Model 1: ' + title1
-    print 'Model 2: ' + title2
+    print('========[ '+ str(word)+ ' ]========')
+    print('Model 1: ' + title1)
+    print('Model 2: ' + title2)
 
-    print '--------------'
+    print('--------------')
 
     comparison.frequency_comparison(model1,model2,stem)
 
-    print '--------------'
+    print('--------------')
     comparison.vectors_comparison(model1,model2,stem)
 
-    print '--------------'
+    print('--------------')
     comparison.neighbors_comparison(model1,model2,stem)
 
 def test3(title1, title2, model1, model2,threshold):#takes the n=threshold most frequent words from the two models and run the comparison

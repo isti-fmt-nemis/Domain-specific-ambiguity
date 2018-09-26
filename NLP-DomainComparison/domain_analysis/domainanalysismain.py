@@ -6,6 +6,7 @@ Created on May 4, 2017
 import io
 import os
 
+from gensim.utils import unicode
 import nltk
 from nltk.corpus import stopwords
 from nltk.data import load

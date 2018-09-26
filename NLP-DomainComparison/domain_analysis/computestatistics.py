@@ -6,7 +6,8 @@ Created on May 19, 2017
 import nltk
 from nltk.probability import FreqDist
 
-from domainanalysismain import get_all_text, get_clean_text_tokens
+from domain_analysis.domainanalysismain import get_clean_text_tokens, \
+    get_all_text
 
 
 INPUT_PATH_CS = "../DATASETS/Computer science_D_2"
