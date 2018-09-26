@@ -17,7 +17,7 @@ models['ele'] = Word2Vec.load(os.path.join(MODEL_PATH, "Electronic_Engineering_D
 models['mec'] = Word2Vec.load(os.path.join(MODEL_PATH, "Mechanical_Engineering_D_2.bin"))
 models['lit'] = Word2Vec.load(os.path.join(MODEL_PATH, "Literature_D_2.bin"))
 
-min_freq_ratio = 0.1
+min_freq_ratio = 0.5
 shared_word_count = 100
 top_words_to_show = 20
 
