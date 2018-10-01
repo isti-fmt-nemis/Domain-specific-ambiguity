@@ -38,6 +38,7 @@ file_list['CS_MEN'] = [DOCUMENTS_DIR + 'Computer_Science_D_2.txt', DOCUMENTS_DIR
 file_list['CS_MED'] = [DOCUMENTS_DIR + 'Computer_Science_D_2.txt', DOCUMENTS_DIR + 'Medicine_D_2.txt']
 file_list['CS_SPO'] = [DOCUMENTS_DIR + 'Computer_Science_D_2.txt', DOCUMENTS_DIR + 'Sports_D_2.txt']
 
+
 SENT_NUM = 3
 
 if __name__ == '__main__':

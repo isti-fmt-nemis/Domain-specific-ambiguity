@@ -51,13 +51,14 @@ def load_index(index_file):
     inv_index = pickle.load(open(index_file, "rb" ))
     return inv_index
     
-def get_sentence_from_file(file_path, term, sent_max_len = 250, sent_min_len = 50):
+def get_sentence_from_file(file_path, term, sent_max_len = 200, sent_min_len = 50):
     with open(file_path, mode="r", encoding="utf-8") as f:
-        raw = f.read().lower()
+        raw = f.read()
         sentences = sent_tokenize(raw)
+        s = ""
         for sent in sentences: 
-            if term in word_tokenize(sent):
-                if len(sent) < sent_max_len and len(sent) > sent_min_len:
+            if term in [t.lower() for t in word_tokenize(sent)]:
+                if len(sent) < sent_max_len and len(sent) > sent_min_len and not sent.startswith(u'='):
                     s = sent
                     break
         return s
@@ -65,9 +66,15 @@ def get_sentence_from_file(file_path, term, sent_max_len = 250, sent_min_len = 5
 def get_random_sentence_index(term, in_folder, in_inverted_index_file):
     inv_index = load_index(in_inverted_index_file)    
     files = inv_index[term]
-    selected = sample(files, 1)[0]
-    file_path = in_folder + os.sep + selected
-    s = get_sentence_from_file(file_path, term)
+    
+    s = ""
+    
+    while True:
+        selected = sample(files, 1)[0]
+        file_path = in_folder + os.sep + selected
+        s = get_sentence_from_file(file_path, term)
+        if s != "":
+            break
     
     return s 
     

@@ -35,7 +35,8 @@ import re
 from nltk.tokenize import sent_tokenize, word_tokenize
 
 
-def get_random_sentence(doc, w, sent_max_len = 200, sent_min_len = 50,window = 500):
+
+def get_random_sentence(doc, w, sent_max_len = 200, sent_min_len = 50, window = 500):
     with open(doc, mode="r", encoding="utf-8") as f:
         raw = f.read().lower()
         pos_w = [m.start() for m in re.finditer(w.lower(), raw)]
@@ -68,9 +69,11 @@ def get_random_sentence_slow(doc, w, sent_max_len = 120):
 
     return selected[0]
 
+
+
 '''
 @param words: words for which the file shall be generated
-@param domains: domain file names, including the path
+@param domains: domain file names, including the path, or inverted index file names
 @param sent_num: number of sentences for each word
 @param file_name: output file name
 '''
