@@ -23,10 +23,10 @@ from validation.merge_documents import merge_domains, sample_and_merge_domains
 
 term_list_top_bottom = dict()
 
-term_list_top_bottom['CS_EEN'] = ['cell', 'logic', 'format', 'interface', 'content', 'field', 'theory', 'signal', 'video', 'power',  'space', 'performance', 'term', 'conference', 'number', 'example', 'computer', 'system', 'point', 'science']
-term_list_top_bottom['CS_MEN'] = ['tool', 'version', 'law', 'software', 'theory', 'matrix', 'frequency', 'path', 'engine', 'life',  'problem', 'state', 'cost', 'test', 'space', 'time', 'range', 'term', 'year', 'example']
-term_list_top_bottom['CS_MED'] = ['cell', 'surface', 'result', 'theory', 'function', 'device', 'agent', 'image', 'solution', 'condition',  'report', 'article', 'issue', 'history', 'student', 'award', 'time', 'term', 'range', 'year']
-term_list_top_bottom['CS_SPO'] = ['surface','distance','college','energy','length','result','condition','technique','table','goal','history','june','september','student','time','award','march','october','range','year']
+term_list_top_bottom['CS_EEN'] = ['tv', 'broadcast', 'processor', 'engineering', 'type', 'electron', 'memory', 'user', 'development', 'hardware', 'version', 'time', 'language', 'window', 'file', 'material', 'display', 'color', 'series', 'video']
+term_list_top_bottom['CS_MEN'] = ['input', 'engineering', 'field', 'memory', 'area', 'motor', 'processing', 'type', 'level', 'server', 'language', 'system', 'window', 'file', 'material', 'force', 'air', 'wave', 'water', 'engine']
+term_list_top_bottom['CS_MED'] = ['result', 'procedure', 'level', 'day', 'year', 'analysis', 'memory', 'tool', 'engineering', 'input', 'test', 'infection', 'blood', 'disease', 'cell', 'syndrome', 'medicine', 'tumor', 'woman', 'health']
+term_list_top_bottom['CS_SPO'] = [ 'conference', 'type', 'medal', 'level', 'award', 'score', 'training', 'year', 'input', 'memory', 'language', 'window', 'file', 'ball', 'cricket', 'sport', 'rule', 'series', 'horse', 'opponent']
 
 file_list = dict()
 
