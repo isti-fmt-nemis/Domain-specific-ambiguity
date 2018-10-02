@@ -5,7 +5,6 @@ Created on Sep 20, 2018
 '''
 from validation.generate_AMT_CSV import generate_CSV, get_random_sentence_slow, \
     get_random_sentence
-from validation.merge_documents import merge_domains, sample_and_merge_domains
 
 
 # def test_random_sentence_slow():
@@ -19,8 +18,6 @@ from validation.merge_documents import merge_domains, sample_and_merge_domains
 #     
 # def test_sample_and_merge_domains():
 #     sample_and_merge_domains('DATASETS', './DATASETS-Merge-Sampled/', s_size = 2000)
-
-
 term_list_top_bottom = dict()
 
 term_list_top_bottom['CS_EEN'] = ['tv', 'broadcast', 'processor', 'engineering', 'type', 'electron', 'memory', 'user', 'development', 'hardware', 'version', 'time', 'language', 'window', 'file', 'material', 'display', 'color', 'series', 'video']
