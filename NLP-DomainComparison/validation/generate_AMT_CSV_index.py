@@ -10,14 +10,15 @@ Created on Oct 1, 2018
 @param file_name: output file name
 '''
 
+
+
 import csv
 import datetime
-
-from validation.inverted_index import get_random_sentence_index, load_index
+from validation import inverted_index
 
 
 def get_random_sentence_index_caller(term, path_to_files, path_to_index_pkl):
-    s = get_random_sentence_index(term, path_to_files, path_to_index_pkl)
+    s = inverted_index.get_random_sentence_index(term, path_to_files, path_to_index_pkl)
     return s
 
 def generate_CSV_from_index(words, domains, sent_num, file_name):
