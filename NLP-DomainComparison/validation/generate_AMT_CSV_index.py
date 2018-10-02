@@ -40,7 +40,6 @@ def generate_CSV_from_index(words, in_domains, sent_num, file_name):
         csv_writer = csv.writer(csv_file, delimiter='\t',
                             quotechar='|', quoting=csv.QUOTE_MINIMAL) 
         
-
           
         for w in words:
             print('\n' + str(datetime.datetime.now()) + ' Generating rows for ' + w + '\n')
