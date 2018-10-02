@@ -37,8 +37,7 @@ def generate_CSV_from_index(words, in_domains, sent_num, file_name):
         domains[domain] = inverted_index.load_index(domains[domain])
     
     with open(file_name, mode='w', newline='', encoding='utf-8') as csv_file:
-        csv_writer = csv.writer(csv_file, delimiter='\t',
-                            quotechar='|', quoting=csv.QUOTE_MINIMAL) 
+        csv_writer = csv.writer(csv_file) 
         
           
         for w in words:
