@@ -23,6 +23,7 @@ def merge_domain_documents(domain_docs_path, out_file_path, sample_docs = False,
             file_list = glob(domain_docs_path+"/*.txt")
         else:
             file_list = sample(glob(domain_docs_path+"/*.txt"), sample_size)
+    
             
         for txtFile in file_list: 
                 with open(txtFile,  mode = 'r', encoding='utf-8') as infile:
@@ -47,4 +48,5 @@ def sample_and_merge_domains(base_path, out_file_path, s_size = 1000):
     corpora = [subdirs for subdirs, _, _ in os.walk(base_path)]
     for corpus in corpora[1:]:
         merge_domain_documents(corpus, out_file_path, sample_docs = True, sample_size = s_size)
+
     
