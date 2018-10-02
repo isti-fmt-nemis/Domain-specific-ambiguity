@@ -63,8 +63,8 @@ def get_sentence_from_file(file_path, term, sent_max_len = 200, sent_min_len = 5
                     break
         return s
     
-def get_random_sentence_index(term, in_folder, in_inverted_index_file):
-    inv_index = load_index(in_inverted_index_file)    
+def get_random_sentence_index(term, in_folder, in_inv_index):   
+    inv_index = in_inv_index
     files = inv_index[term]
     
     s = ""
@@ -77,6 +77,7 @@ def get_random_sentence_index(term, in_folder, in_inverted_index_file):
             break
     
     return s 
+
     
     
 #create_index("../DATASETS/Computer_Science_D_2", "CS_dictionary.pkl")
