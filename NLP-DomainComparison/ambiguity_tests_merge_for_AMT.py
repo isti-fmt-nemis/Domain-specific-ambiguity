@@ -47,7 +47,7 @@ for scenario_name in scenarios:
                 ambiguous = ambiguity.ambiguity_mse_rank_merge(scenarios[scenario_name], min_freq_ratio, shared_word_count, w2v_topn_value)
         
                 ranked_sample_top = evaluate_results.generate_ranked_sample_top(top_words_num, sample_size, ambiguous)
-#                ranked_sample_step = evaluate_results.generate_ranked_sample_step(sample_size*2, ambiguous)
+                ranked_sample_step = evaluate_results.generate_ranked_sample_step(sample_size*2, ambiguous)
             
                 terms_sample_top = [term for (_, term, _, _, _) in ranked_sample_top]
 #                terms_sample_step = [term for (_, term, _, _, _) in ranked_sample_step]
