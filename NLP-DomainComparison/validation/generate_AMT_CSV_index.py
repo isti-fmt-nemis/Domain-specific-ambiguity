@@ -14,8 +14,9 @@ Created on Oct 1, 2018
 
 import csv
 import datetime
+import random
 
-from validation import inverted_index
+from validation import inverted_index 
 
 
 def get_random_sentence_index_caller(term, path_to_files, index_pkl):
@@ -39,15 +40,16 @@ def generate_CSV_from_index(words, in_domains, sent_num, file_name):
     with open(file_name, mode='w', newline='', encoding='utf-8') as csv_file:
         csv_writer = csv.writer(csv_file) 
         
-          
-        for w in words:
+        shuffled = words*sent_num
+        random.shuffle(shuffled)
+        for w in shuffled:
             print('\n' + str(datetime.datetime.now()) + ' Generating rows for ' + w + '\n')
-            for i in range(sent_num):
-                csv_row = list()
-                csv_row.append(w)
-                for d in domains.keys():
-                    sent_w = get_random_sentence_index_caller(w, d, domains[d])
-                    csv_row.append(sent_w)
-                print(csv_row)
-                csv_writer.writerow(csv_row)            
+#            for i in range(sent_num):
+            csv_row = list()
+            csv_row.append(w)
+            for d in domains.keys():
+                sent_w = get_random_sentence_index_caller(w, d, domains[d])
+                csv_row.append(sent_w)
+            print(csv_row)
+            csv_writer.writerow(csv_row)            
                 

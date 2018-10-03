@@ -18,15 +18,64 @@ the validation of the ambiguity score, rather than the list.
 - tau-b: enables the comparison between the human vs machine ranking.  
 '''
 from __future__ import division
+
+import csv
+import numpy as np
+from pprint import pprint
 from random import sample
 
 
+def evaluate_results_top_bottom(ground_truth_sets, annotation_sets):
+    
+    precision = len(annotation_sets[0].intersection(ground_truth_sets[0])) / len(annotation_sets[0])
+    recall = len(annotation_sets[0].intersection(ground_truth_sets[0])) / len(ground_truth_sets[0])
+    
+    return [precision, recall]
 
-def evaluate_results_top_bottom():
-    return 0
+'''
+Given the ordered list of terms to consider, builds the automated sets to be used
+for evaluation. The index_separator is the index that divides the two classes.
+'''
 
-def compute_AMT_scores():
-    return 0
+def build_automated_sets(automated_list, index_separator):
+    
+    ambiguous_terms = set(automated_list[:index_separator])
+    non_ambiguous_terms = set(automated_list[index_separator:])
+    
+    return [ambiguous_terms, non_ambiguous_terms]  
+    
+'''
+Given a dictionary of couples term:ambiguity_value, creates
+the ground truth made of terms that are considered ambiguous,
+based on the ambiguity_threshold given as input
+'''
+def build_ground_truth_sets(term_value_dictionary, ambiguity_threshold):
+    
+    ambiguous_terms_annotated = set([t for t, v in term_value_dictionary.items() if v >= ambiguity_threshold])
+    non_ambiguous_terms_annotated = set([t for t, v in term_value_dictionary.items() if v < ambiguity_threshold])
+    
+    return [ambiguous_terms_annotated, non_ambiguous_terms_annotated]
+
+'''
+Given a .csv file with several terms and their evaluation score, creates
+a dictionary to be used for evaluation. Each key of the dictionary
+is a term, and the value is the average of the scores obtained.
+@param file_scoring: csv file cointaining the scores
+@param score_column_idx: index of the column of the csv file in which the score is placed
+@param term_colum_ids: index of the column of the csv file in which the term is placed 
+'''
+def get_term_value_dictionary(file_scoring, score_column_idx, term_column_idx):
+    
+    with open(file_scoring, mode='r') as infile:
+        reader = list(csv.reader(infile))
+        terms = set([rows[term_column_idx] for rows in reader])
+        
+        annotation_dictionary = dict()
+        for term in terms:
+            annotation_dictionary[term] = np.mean([int(rows[score_column_idx]) for rows in reader if rows[term_column_idx] == term])
+            
+    return annotation_dictionary    
+
 
 '''
 Given a list of terms, the function returns a sample of the list that
@@ -52,3 +101,12 @@ def generate_ranked_sample_step(in_sample_size, in_w_list):
     return step_list[:in_sample_size]
     
     
+##Usage: 
+# dictionary = get_term_value_dictionary(, score_column_idx = 1, term_column_idx = 0)
+# ground = build_ground_truth_sets(dictionary, 3)
+# auto = build_automated_sets(['a','b','c','d','e','f','g','h','i','l'], 5)
+# pprint(['automated', auto])
+# pprint(['ground truth', ground])
+# pprint(evaluate_results_top_bottom(ground, auto))
+
+
