@@ -25,10 +25,36 @@ from pprint import pprint
 from random import sample
 
 
-def evaluate_results_top_bottom(ground_truth_sets, annotation_sets):
+''''
+This function evaluates the results as a ranking with ties. Given the auto_sets,
+and the ground_truth_ranked_list coming from the annotation, for each element in the ambiguous set 
+in the auto_sets, it computes how many elements of the non-ambiguous set follows 
+the specific element of the ambiguous set. Then, it sums-up the contribution
+for each element of the ambiguous set, and computes the final evaluation value 
+by dividing for the product of the sizes of the non-ambiguous set and ambiguous set. 
+'''
+
+def evaluate_results_top_bottom_rank(ground_truth_ranked_list, auto_sets):
+    ambiguous_set = auto_sets[0]
+    non_ambiguous_set = auto_sets[1]
     
-    precision = len(annotation_sets[0].intersection(ground_truth_sets[0])) / len(annotation_sets[0])
-    recall = len(annotation_sets[0].intersection(ground_truth_sets[0])) / len(ground_truth_sets[0])
+    c_amb = 0
+    
+    for ambiguous_term in ambiguous_set:
+        followers = ground_truth_ranked_list[ground_truth_ranked_list.index(ambiguous_term):]
+        c_amb = c_amb + len(set(followers).intersection(set(non_ambiguous_set)))
+        
+    tau_value = c_amb / (len(ambiguous_set)*len(non_ambiguous_set)) 
+        
+    return tau_value
+
+'''
+This function evaluates precision and recall, treating the problem as a classification problem
+'''
+def evaluate_results_top_bottom_classification(ground_truth_sets, auto_sets):
+    
+    precision = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(auto_sets[0])
+    recall = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(auto_sets[0])
     
     return [precision, recall]
 
@@ -66,7 +92,7 @@ is a term, and the value is the average of the scores obtained.
 '''
 def get_term_value_dictionary(file_scoring, score_column_idx, term_column_idx):
     
-    with open(file_scoring, mode='r') as infile:
+    with open(file_scoring, mode='r', encoding='utf-8') as infile:
         reader = list(csv.reader(infile))
         terms = set([rows[term_column_idx] for rows in reader])
         
@@ -102,11 +128,26 @@ def generate_ranked_sample_step(in_sample_size, in_w_list):
     
     
 ##Usage: 
-# dictionary = get_term_value_dictionary(, score_column_idx = 1, term_column_idx = 0)
-# ground = build_ground_truth_sets(dictionary, 3)
-# auto = build_automated_sets(['a','b','c','d','e','f','g','h','i','l'], 5)
-# pprint(['automated', auto])
-# pprint(['ground truth', ground])
-# pprint(evaluate_results_top_bottom(ground, auto))
+dictionary_1 = get_term_value_dictionary('1_a.csv', score_column_idx = 3, term_column_idx = 0)
+ground_1 = build_ground_truth_sets(dictionary_1, 3)
+auto_1 = build_automated_sets(['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach'], 10)
+pprint(evaluate_results_top_bottom_classification(ground_1, auto_1))
+
+dictionary_7 = get_term_value_dictionary('7_a.csv', score_column_idx = 5, term_column_idx = 0)
+ground_7 = build_ground_truth_sets(dictionary_7, 3)
+auto_7 = build_automated_sets(['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report'], 10)
+pprint(evaluate_results_top_bottom_classification(ground_7, auto_7))
+
+
+ground_truth_rank_7 = sorted(dictionary_7, key=dictionary_7.get, reverse=True)
+tau_result_7 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_7, auto_sets=auto_7)
+print(tau_result_7)
+
+ground_truth_rank_1 = sorted(dictionary_1, key=dictionary_1.get, reverse=True)
+tau_result_1 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_1, auto_sets=auto_1)
+print(tau_result_1)
+
+
+
 
 
