@@ -102,6 +102,17 @@ def get_term_value_dictionary(file_scoring, score_column_idx, term_column_idx):
             
     return annotation_dictionary    
 
+'''
+Returns the list of scores from a .csv file
+'''
+def get_term_value_list(file_scoring, score_column_idx):
+    
+    with open(file_scoring, mode='r', encoding='utf-8') as infile:
+        reader = list(csv.reader(infile))
+        scores = [rows[score_column_idx] for rows in reader]
+            
+    return scores    
+    
 
 '''
 Given a list of terms, the function returns a sample of the list that
@@ -128,24 +139,27 @@ def generate_ranked_sample_step(in_sample_size, in_w_list):
     
     
 ##Usage: 
-dictionary_1 = get_term_value_dictionary('1_a.csv', score_column_idx = 3, term_column_idx = 0)
-ground_1 = build_ground_truth_sets(dictionary_1, 3)
-auto_1 = build_automated_sets(['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach'], 10)
-pprint(evaluate_results_top_bottom_classification(ground_1, auto_1))
+#dictionary_1_a = get_term_value_dictionary('1_a.csv', score_column_idx = 3, term_column_idx = 0)
+#ground_1 = build_ground_truth_sets(dictionary_1_a, 3)
+#auto_1 = build_automated_sets(['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach'], 10)
+#pprint(evaluate_results_top_bottom_classification(ground_1, auto_1))
+ 
+#dictionary_7 = get_term_value_dictionary('7_a.csv', score_column_idx = 5, term_column_idx = 0)
+#ground_7 = build_ground_truth_sets(dictionary_7, 3)
+#auto_7 = build_automated_sets(['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report'], 10)
+#pprint(evaluate_results_top_bottom_classification(ground_7, auto_7))
+ 
+ 
+# ground_truth_rank_7 = sorted(dictionary_7, key=dictionary_7.get, reverse=True)
+# tau_result_7 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_7, auto_sets=auto_7)
+# print(tau_result_7)
+ 
+# ground_truth_rank_1 = sorted(dictionary_1_a, key=dictionary_1_a.get, reverse=True)
+# tau_result_1 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_1, auto_sets=auto_1)
+# print(tau_result_1)
 
-dictionary_7 = get_term_value_dictionary('7_a.csv', score_column_idx = 5, term_column_idx = 0)
-ground_7 = build_ground_truth_sets(dictionary_7, 3)
-auto_7 = build_automated_sets(['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report'], 10)
-pprint(evaluate_results_top_bottom_classification(ground_7, auto_7))
 
 
-ground_truth_rank_7 = sorted(dictionary_7, key=dictionary_7.get, reverse=True)
-tau_result_7 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_7, auto_sets=auto_7)
-print(tau_result_7)
-
-ground_truth_rank_1 = sorted(dictionary_1, key=dictionary_1.get, reverse=True)
-tau_result_1 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_1, auto_sets=auto_1)
-print(tau_result_1)
 
 
 
