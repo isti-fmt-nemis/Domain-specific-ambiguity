@@ -71,6 +71,20 @@ def get_frequent_words_spacy(domain, size=100):
         word = sorted_vocab[head]
         if get_tag(word) == 'NN' and len(word) > 1 and not word.isnumeric():
             selected.add(word)
+            
+def get_min_freq_words_spacy(domain, min_freq=1000):
+    sorted_vocab = get_sorted_vocab(domain)
+    selected = set([word for word, freq in sorted_vocab if freq>=min_freq])
+    to_remove = set()
+    for word in selected:
+        if get_tag(word) != 'NN':
+            to_remove.add(word)
+        elif len(word) == 1:
+            to_remove.add(word)
+        elif word.isnumeric():
+            to_remove.add(word)
+    selected.difference_update(to_remove)
+    return selected
 
 
 def ambiguity_mse_rank(domains, vocab_size=100, w2v_topn=100):
@@ -126,7 +140,8 @@ def ambiguity_mse_rank_multi(domains, vocab_size=100, w2v_topn=100):
 
 
 def ambiguity_mse_rank_main_domain(main_domain, domains, min_freq_ratio = 0.5, vocab_size=200, w2v_topn=1000):
-    words = get_frequent_words_spacy(main_domain, vocab_size)
+    # words = get_frequent_words_spacy(main_domain, vocab_size)
+    words = get_min_freq_words_spacy(main_domain, 800)
     output = list()
     for word in words:
         word_freq = main_domain.wv.vocab[word].count

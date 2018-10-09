@@ -65,14 +65,19 @@ def get_sentence_from_file(file_path, term, sent_max_len = 200, sent_min_len = 5
     
 def get_random_sentence_index(term, in_folder, in_inv_index):   
     inv_index = in_inv_index
-    files = inv_index[term]
+    if term in inv_index.keys():
+        search_term = term  
+    elif (term+'s') in inv_index.keys():
+        search_term = term + 's'
+    
+    files = inv_index[search_term]
     
     s = ""
     
     while True:
         selected = sample(files, 1)[0]
         file_path = in_folder + os.sep + selected
-        s = get_sentence_from_file(file_path, term)
+        s = get_sentence_from_file(file_path, search_term)
         if s != "":
             break
     

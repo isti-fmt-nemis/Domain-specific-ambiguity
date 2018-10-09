@@ -19,11 +19,19 @@ the validation of the ambiguity score, rather than the list.
 '''
 from __future__ import division
 
+from _collections import defaultdict
 import csv
-import numpy as np
 from pprint import pprint
 from random import sample
+import operator
 
+import numpy as np
+
+
+evaluation_dictionary_AMT = {'exactly the same':1,
+                         'almost the same':2, 
+                         'somewhat different':3,
+                         'extremely different':4}
 
 ''''
 This function evaluates the results as a ranking with ties. Given the auto_sets,
@@ -47,6 +55,33 @@ def evaluate_results_top_bottom_rank(ground_truth_ranked_list, auto_sets):
     tau_value = c_amb / (len(ambiguous_set)*len(non_ambiguous_set)) 
         
     return tau_value
+
+def evaluate_results_top_bottom_optimistic(ground_truth_dictionary, auto_sets):
+    ambiguous_set = auto_sets[0]
+    non_ambiguous_set = auto_sets[1]
+    
+    #create tuples that are ordered based on the score
+    sorted_elems = []
+    ground_truth_rank = sorted(ground_truth_dictionary, key=ground_truth_dictionary.get, reverse=True)
+    for item in ground_truth_rank:
+        if item in ambiguous_set:
+            sorted_elems.append([item, ground_truth_dictionary[item], 0])
+        else:
+            sorted_elems.append([item, ground_truth_dictionary[item], 1])
+                 
+    dict_ties = defaultdict(list)
+    for [term, value, amb] in sorted_elems:
+        dict_ties[value].append([term, value, amb])
+    
+    for key in dict_ties.keys():
+        dict_ties[key].sort(key=lambda x: x[2])
+    
+    sorted_dict = sorted(dict_ties.items(), key=operator.itemgetter(0), reverse=True)
+    sorted_list = [item for (val, item) in sorted_dict]       
+    ranked_list = [word for item_list in sorted_list for [word, _, _] in item_list]                 
+
+    return evaluate_results_top_bottom_rank(ranked_list, auto_sets) 
+    
 
 '''
 This function evaluates precision and recall, treating the problem as a classification problem
@@ -102,6 +137,23 @@ def get_term_value_dictionary(file_scoring, score_column_idx, term_column_idx):
             
     return annotation_dictionary    
 
+
+def convert_score(string_value):
+    return evaluation_dictionary_AMT[string_value.lower()]
+
+def get_term_value_dictionary_AMT(file_scoring, score_column_idx, term_column_idx):
+    
+    with open(file_scoring, mode='r', encoding='utf-8') as infile:
+        reader = list(csv.reader(infile))[1:]
+        terms = set([rows[term_column_idx] for rows in reader])
+        
+        annotation_dictionary = dict()
+        for term in terms:
+            annotation_dictionary[term] = np.mean([convert_score(rows[score_column_idx]) for rows in reader if rows[term_column_idx] == term])
+            
+    return annotation_dictionary  
+
+
 '''
 Returns the list of scores from a .csv file
 '''
@@ -112,7 +164,18 @@ def get_term_value_list(file_scoring, score_column_idx):
         scores = [rows[score_column_idx] for rows in reader]
             
     return scores    
+       
+'''
+Returns the list of scores from a .csv file from AMT,
+which includes a header
+'''
+def get_term_value_list_AMT(file_scoring, score_column_idx):
     
+    with open(file_scoring, mode='r', encoding='utf-8') as infile:
+        reader = list(csv.reader(infile))[1:]
+        scores = [rows[score_column_idx] for rows in reader]
+            
+    return scores   
 
 '''
 Given a list of terms, the function returns a sample of the list that
@@ -136,27 +199,29 @@ def generate_ranked_sample_step(in_sample_size, in_w_list):
     step = len(in_w_list)//in_sample_size
     step_list = in_w_list[0::step]
     return step_list[:in_sample_size]
+
+'''
+Reduce the scores to two values
+'''
+def reduce_score(score_value):
+    if score_value == 1 or score_value == 2:
+        return 1
+    else: 
+        return 2
+
+'''
+Compute overlap between scores of two lists
+'''    
+def compute_score_overlap(list_a, list_b):
     
+    count = 0
+    for n, item in enumerate(list_a):
+        if list_b[n] == item:
+            count += 1
     
-##Usage: 
-#dictionary_1_a = get_term_value_dictionary('1_a.csv', score_column_idx = 3, term_column_idx = 0)
-#ground_1 = build_ground_truth_sets(dictionary_1_a, 3)
-#auto_1 = build_automated_sets(['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach'], 10)
-#pprint(evaluate_results_top_bottom_classification(ground_1, auto_1))
- 
-#dictionary_7 = get_term_value_dictionary('7_a.csv', score_column_idx = 5, term_column_idx = 0)
-#ground_7 = build_ground_truth_sets(dictionary_7, 3)
-#auto_7 = build_automated_sets(['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report'], 10)
-#pprint(evaluate_results_top_bottom_classification(ground_7, auto_7))
- 
- 
-# ground_truth_rank_7 = sorted(dictionary_7, key=dictionary_7.get, reverse=True)
-# tau_result_7 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_7, auto_sets=auto_7)
-# print(tau_result_7)
- 
-# ground_truth_rank_1 = sorted(dictionary_1_a, key=dictionary_1_a.get, reverse=True)
-# tau_result_1 = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank_1, auto_sets=auto_1)
-# print(tau_result_1)
+    return count/len(list_a)
+    
+
 
 
 

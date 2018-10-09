@@ -49,15 +49,37 @@ Min Frequency = 0.3
 # sport_rehab_machine_top_f03 = ['result', 'service', 'series', 'tool', 'feature', 'function', 'theory', 'device', 'material', 'surface', 'color', 'design', 'space', 'analysis', 'rule', 'load', 'work', 'term', 'age', 'university']
 # sport_rehab_machine_step_f03 = ['result', 'surface', 'approach', 'image', 'side', 'order', 'case', 'body', 'energy', 'source', 'method', 'member', 'control', 'group', 'frequency', 'application', 'science', 'output', 'country', 'temperature']
 
+'''
+Terms generated with the approach that considers solely the most frequent terms of the different domains
+'''
 
-CS_EEN_f03_w2vlen_100_dlen_200_top = ['cell', 'action', 'logic', 'sequence', 'surface', 'institute', 'table', 'line', 'format', 'particle', 'distribution', 'resource', 'design', 'access', 'state', 'core', 'video', 'source', 'pattern', 'storage']
-CS_MEN_f03_w2vlen_100_dlen_200_top = ['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach']
-CS_MED_f03_w2vlen_100_dlen_200_top = ['device', 'performance', 'image', 'result', 'function', 'theory', 'content', 'memory', 'table', 'release', 'development', 'institute', 'test', 'class', 'field', 'society', 'signal', 'association', 'number', 'task']
-CS_SPO_f03_w2vlen_100_dlen_200_top = ['feature', 'rule', 'service', 'conference', 'pattern', 'table', 'case', 'design', 'technique', 'format', 'board', 'video', 'state', 'type', 'step', 'change', 'list', 'organization', 'university', 'element']
-medical_software_f03_w2vlen_100_dlen_200_top = ['performance', 'memory', 'result', 'theory', 'device', 'image', 'function', 'content', 'table', 'release', 'technique', 'error', 'case', 'work', 'condition', 'degree', 'level', 'professor', 'access', 'product']
-medical_device_f03_w2vlen_100_dlen_200_top = ['table', 'function', 'surface', 'sequence', 'theory', 'rule', 'result', 'chemical', 'library', 'pattern', 'game', 'graph', 'user', 'supply', 'technology', 'class', 'simulation', 'order', 'code', 'control']
-medical_robot_f03_w2vlen_100_dlen_200_top = ['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report']
-sport_rehab_machine_f03_w2vlen_100_dlen_200_top = ['surface', 'material', 'industry', 'law', 'result', 'contact', 'chemical', 'distance', 'table', 'pattern', 'april', 'approach', 'interaction', 'degree', 'structure', 'alternative', 'tree', 'engineering', 'june', 'journal']
+# CS_EEN_f03_w2vlen_100_dlen_200_top = ['cell', 'action', 'logic', 'sequence', 'surface', 'institute', 'table', 'line', 'format', 'particle', 'distribution', 'resource', 'design', 'access', 'state', 'core', 'video', 'source', 'pattern', 'storage']
+# CS_MEN_f03_w2vlen_100_dlen_200_top = ['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach']
+# CS_MED_f03_w2vlen_100_dlen_200_top = ['device', 'performance', 'image', 'result', 'function', 'theory', 'content', 'memory', 'table', 'release', 'development', 'institute', 'test', 'class', 'field', 'society', 'signal', 'association', 'number', 'task']
+# CS_SPO_f03_w2vlen_100_dlen_200_top = ['feature', 'rule', 'service', 'conference', 'pattern', 'table', 'case', 'design', 'technique', 'format', 'board', 'video', 'state', 'type', 'step', 'change', 'list', 'organization', 'university', 'element']
+# medical_software_f03_w2vlen_100_dlen_200_top = ['performance', 'memory', 'result', 'theory', 'device', 'image', 'function', 'content', 'table', 'release', 'technique', 'error', 'case', 'work', 'condition', 'degree', 'level', 'professor', 'access', 'product']
+# medical_device_f03_w2vlen_100_dlen_200_top = ['table', 'function', 'surface', 'sequence', 'theory', 'rule', 'result', 'chemical', 'library', 'pattern', 'game', 'graph', 'user', 'supply', 'technology', 'class', 'simulation', 'order', 'code', 'control']
+# medical_robot_f03_w2vlen_100_dlen_200_top = ['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report']
+# sport_rehab_machine_f03_w2vlen_100_dlen_200_top = ['surface', 'material', 'industry', 'law', 'result', 'contact', 'chemical', 'distance', 'table', 'pattern', 'april', 'approach', 'interaction', 'degree', 'structure', 'alternative', 'tree', 'engineering', 'june', 'journal']
+
+#TEST: 
+#[top_10 bottom_10] CS_MEN_f03_w2vlen_100_dlen_200_top = ['frequency', 'length', 'matrix', 'institute', 'release', 'tool', 'environment', 'law', 'theory', 'distance', 'problem', 'time', 'space', 'range', 'state', 'term', 'cost', 'year', 'example', 'test']
+#TEST: min_occ = 800 
+#CS_MEN_f03_w2vlen_100_dlen_200_top = ['hull', 'bar', 'room', 'option', 'argument', 'reduction', 'disk', 'interpretation', 'expression', 'house', 'year', 'link', 'phase', 'film', 'block', 'customer', 'transfer', 'order', 'report', 'distance']
+
+
+'''
+Terms generated with the approach that considers the terms that occur at least 800 times in each domain
+'''
+CS_EEN_f03_w2vlen_100_dlen_200_top = ['interpretation', 'formula', 'flash', 'relation', 'motor', 'bell', 'studio', 'contact', 'surface', 'news', 'capacity', 'solution', 'law', 'period', 'transfer', 'force', 'cycle', 'mapping', 'layer', 'output']
+CS_MEN_f03_w2vlen_100_dlen_200_top = ['disk', 'room', 'expression', 'hull', 'reduction', 'option', 'bar', 'house', 'interpretation', 'argument', 'track', 'family', 'action', 'molecule', 'law', 'theory', 'life', 'production', 'source', 'tool']
+CS_MED_f03_w2vlen_100_dlen_200_top = ['strength', 'editor', 'client', 'mouse', 'relation', 'matrix', 'pair', 'arm', 'argument', 'house', 'government', 'speech', 'word', 'germany', 'matter', 'success', 'community', 'transfer', 'location', 'class']
+CS_SPO_f03_w2vlen_100_dlen_200_top = ['formula', 'loop', 'reduction', 'michael', 'founder', 'effect', 'string', 'washington', 'protein', 'statement', 'corporation', 'procedure', 'government', 'education', 'party', 'opportunity', 'selection', 'steve', 'interest', 'practice']
+medical_software_f03_w2vlen_100_dlen_200_top = ['matrix', 'pair', 'house', 'arm', 'mouse', 'argument', 'editor', 'strength', 'relation', 'client', 'location', 'degree', 'university', 'science', 'principle', 'energy', 'production', 'fact', 'claim', 'statement']
+medical_device_f03_w2vlen_100_dlen_200_top = ['interpretation', 'arm', 'expression', 'formula', 'argument', 'relation', 'consequence', 'client', 'house', 'surface', 'supply', 'desktop', 'authority', 'software', 'society', 'presence', 'byte', 'science', 'combination', 'provider']
+medical_robot_f03_w2vlen_100_dlen_200_top = ['argument', 'expression', 'consequence', 'relation', 'institution', 'formula', 'respect', 'statement', 'father', 'ion', 'glass', 'partner', 'structure', 'laboratory', 'part', 'author', 'detector', 'message', 'sin', 'concept']
+sport_rehab_machine_f03_w2vlen_100_dlen_200_top = ['founder', 'argument', 'brother', 'end', 'michael', 'consequence', 'story', 'ray', 'respect', 'statement', 'lack', 'context', 'complexity', 'practice', 'opening', 'panel', 'bike', 'experience', 'stage', 'rail']
+
 
 
 '''
@@ -101,9 +123,9 @@ if __name__ == '__main__':
     generate_CSV_from_index(CS_MEN_f03_w2vlen_100_dlen_200_top, domain_list_CS_MEN, SENT_NUM, './CSV-AMT-Index/CS_MEN_f03_w2vlen_100_dlen_200_top.csv') 
     generate_CSV_from_index(CS_MED_f03_w2vlen_100_dlen_200_top, domain_list_CS_MED, SENT_NUM, './CSV-AMT-Index/CS_MED_f03_w2vlen_100_dlen_200_top.csv') 
     generate_CSV_from_index(CS_SPO_f03_w2vlen_100_dlen_200_top, domain_list_CS_SPO, SENT_NUM, './CSV-AMT-Index/CS_SPO_f03_w2vlen_100_dlen_200_top.csv')
-
+  
     generate_CSV_from_index(medical_device_f03_w2vlen_100_dlen_200_top, domain_list_medical_device, SENT_NUM, './CSV-AMT-Index/medical_device_f03_w2vlen_100_dlen_200_top.csv')
     generate_CSV_from_index(medical_robot_f03_w2vlen_100_dlen_200_top, domain_list_medical_robot, SENT_NUM, './CSV-AMT-Index/medical_robot_f03_w2vlen_100_dlen_200_top.csv')
     generate_CSV_from_index(sport_rehab_machine_f03_w2vlen_100_dlen_200_top, domain_list_sport_rehab, SENT_NUM, './CSV-AMT-Index/sport_rehab_machine_f03_w2vlen_100_dlen_200_top.csv')
-    
+     
     pass
