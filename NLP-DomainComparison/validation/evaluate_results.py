@@ -26,6 +26,7 @@ from random import sample
 import operator
 
 import numpy as np
+from boto.sdb.db.sequence import double
 
 
 evaluation_dictionary_AMT = {'exactly the same':1,
@@ -63,15 +64,18 @@ def evaluate_results_top_bottom_optimistic(ground_truth_dictionary, auto_sets):
     #create tuples that are ordered based on the score
     sorted_elems = []
     ground_truth_rank = sorted(ground_truth_dictionary, key=ground_truth_dictionary.get, reverse=True)
+    
     for item in ground_truth_rank:
         if item in ambiguous_set:
             sorted_elems.append([item, ground_truth_dictionary[item], 0])
         else:
             sorted_elems.append([item, ground_truth_dictionary[item], 1])
-                 
+            
+                
     dict_ties = defaultdict(list)
     for [term, value, amb] in sorted_elems:
         dict_ties[value].append([term, value, amb])
+    
     
     for key in dict_ties.keys():
         dict_ties[key].sort(key=lambda x: x[2])
@@ -82,14 +86,41 @@ def evaluate_results_top_bottom_optimistic(ground_truth_dictionary, auto_sets):
 
     return evaluate_results_top_bottom_rank(ranked_list, auto_sets) 
     
+def evaluate_results_top_bottom_skip_ties(ground_truth_dictionary, auto_sets):
+    ambiguous_set = auto_sets[0]
+    non_ambiguous_set = auto_sets[1]
+               
+    c_amb = 0
+    c_pairs = 0
+    
+    for ambiguous_term in ambiguous_set:
+        ambiguous_term_score = ground_truth_dictionary[ambiguous_term]
+        for non_ambiguous_term in non_ambiguous_set:
+            non_ambiguous_term_score = ground_truth_dictionary[non_ambiguous_term]
+            if ambiguous_term_score>non_ambiguous_term_score:
+                c_amb += 1
+                c_pairs += 1
+            elif ambiguous_term_score < non_ambiguous_term_score:
+                c_pairs += 1
+        
+    tau_value = c_amb / c_pairs 
+        
+    return tau_value
 
 '''
 This function evaluates precision and recall, treating the problem as a classification problem
 '''
 def evaluate_results_top_bottom_classification(ground_truth_sets, auto_sets):
     
-    precision = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(auto_sets[0])
-    recall = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(auto_sets[0])
+    if len(auto_sets[0]) != 0:
+        precision = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(auto_sets[0])
+    else:
+        precision = float(1)
+    
+    if len(ground_truth_sets[0]) != 0:
+        recall = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(ground_truth_sets[0])
+    else:
+        recall = float(1)
     
     return [precision, recall]
 

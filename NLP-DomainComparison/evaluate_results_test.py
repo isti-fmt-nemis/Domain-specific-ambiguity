@@ -11,7 +11,9 @@ from validation.evaluate_results import build_automated_sets, \
     get_term_value_dictionary, evaluate_results_top_bottom_rank, \
     get_term_value_list, get_term_value_dictionary_AMT, convert_score, \
     get_term_value_list_AMT, compute_score_overlap, reduce_score, \
-    evaluate_results_top_bottom_optimistic
+    evaluate_results_top_bottom_optimistic, \
+    evaluate_results_top_bottom_skip_ties, build_ground_truth_sets, \
+    evaluate_results_top_bottom_classification
 
 
 def compute_results(auto_list, set_separator_index, file_annotation_a, file_annotation_b, in_score_column_idx, in_term_column_idx):
@@ -24,13 +26,17 @@ def compute_results(auto_list, set_separator_index, file_annotation_a, file_anno
         dictionary_merge[k] = np.mean([dictionary_a[k],dictionary_b[k]]) 
     ground_truth_rank = sorted(dictionary_merge, key=dictionary_merge.get, reverse=True)
     
+    
     tau_result = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank, auto_sets=auto_s)
+    tau_result_ties = evaluate_results_top_bottom_optimistic(dictionary_merge, auto_s)
+    tau_result_skip_ties = evaluate_results_top_bottom_skip_ties(dictionary_merge, auto_s)
     
     scores_a = get_term_value_list(file_annotation_a, score_column_idx = in_score_column_idx)
     scores_b = get_term_value_list(file_annotation_b, score_column_idx = in_score_column_idx)
-    k_result = (cohen_kappa_score(scores_a, scores_b))
 
-    return [k_result, tau_result] 
+    k_result = (cohen_kappa_score(scores_a, scores_b))
+    
+    return [k_result, tau_result_ties, tau_result_skip_ties] 
 
 
 
@@ -44,9 +50,12 @@ def compute_results_from_AMT(auto_list, set_separator_index, file_annotations, i
         dictionary_merge[k] = np.mean([dictionary_a[k],dictionary_b[k]]) 
     ground_truth_rank = sorted(dictionary_merge, key=dictionary_merge.get, reverse=True)
     
-    tau_result = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank, auto_sets=auto_s)
+#     ground_sets = build_ground_truth_sets(dictionary_merge, 3)
+#     [p, r] = evaluate_results_top_bottom_classification(ground_sets, auto_s)
     
+    tau_result = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank, auto_sets=auto_s)
     tau_result_ties = evaluate_results_top_bottom_optimistic(dictionary_merge, auto_s)
+    tau_result_skip_ties = evaluate_results_top_bottom_skip_ties(dictionary_merge, auto_s)
     
     scores_literal_a = get_term_value_list_AMT(file_annotations, score_column_idx = in_score_a_column_idx)
     scores_literal_b = get_term_value_list_AMT(file_annotations, score_column_idx = in_score_b_column_idx)
@@ -61,7 +70,7 @@ def compute_results_from_AMT(auto_list, set_separator_index, file_annotations, i
     k_result_permissive = cohen_kappa_score(scores_a_permissive, scores_b_permissive)
     k_permissive_percent = compute_score_overlap(scores_a_permissive, scores_b_permissive)
     
-    return [k_result, k_percent, k_result_permissive, k_permissive_percent, tau_result, tau_result_ties]
+    return [k_result, tau_result_ties, tau_result_skip_ties]
 
         
 
@@ -83,12 +92,39 @@ def compute_results_from_AMT(auto_list, set_separator_index, file_annotations, i
 # auto_list_13 = ['founder', 'argument', 'brother', 'end', 'michael', 'consequence', 'story', 'ray', 'respect', 'statement', 'lack', 'context', 'complexity', 'practice', 'opening', 'panel', 'bike', 'experience', 'stage', 'rail']
 # print(compute_results(auto_list=auto_list_13, set_separator_index=10, file_annotation_a='./validation/13.csv', file_annotation_b='./validation/13.csv', in_score_column_idx=6, in_term_column_idx=0))      
 
+# auto_list_14 = ['argument', 'expression', 'consequence', 'relation', 'institution', 'formula', 'respect', 'statement', 'father', 'ion', 'glass', 'partner', 'structure', 'laboratory', 'part', 'author', 'detector', 'message', 'sin', 'concept']
+# print(compute_results(auto_list=auto_list_14, set_separator_index=10, file_annotation_a='./validation/14.csv', file_annotation_b='./validation/14.csv', in_score_column_idx=5, in_term_column_idx=0))
+
 CS_EEN_f03_w2vlen_100_dlen_200_top = ['interpretation', 'formula', 'flash', 'relation', 'motor', 'bell', 'studio', 'contact', 'surface', 'news', 'capacity', 'solution', 'law', 'period', 'transfer', 'force', 'cycle', 'mapping', 'layer', 'output']
-CS_MEN_f03_w2vlen_100_dlen_200_top = ['disk', 'room', 'expression', 'hull', 'reduction', 'option', 'bar', 'house', 'interpretation', 'argument', 'track', 'family', 'action', 'molecule', 'law', 'theory', 'life', 'production', 'source', 'tool']
+CS_MEN_f03_w2vlen_100_dlen_200_top = ['hull', 'bar', 'room', 'option', 'argument', 'reduction', 'disk', 'interpretation', 'expression', 'house', 'year', 'link', 'phase', 'film', 'block', 'customer', 'transfer', 'order', 'report', 'distance']
 CS_MED_f03_w2vlen_100_dlen_200_top = ['strength', 'editor', 'client', 'mouse', 'relation', 'matrix', 'pair', 'arm', 'argument', 'house', 'government', 'speech', 'word', 'germany', 'matter', 'success', 'community', 'transfer', 'location', 'class']
 CS_SPO_f03_w2vlen_100_dlen_200_top = ['formula', 'loop', 'reduction', 'michael', 'founder', 'effect', 'string', 'washington', 'protein', 'statement', 'corporation', 'procedure', 'government', 'education', 'party', 'opportunity', 'selection', 'steve', 'interest', 'practice']
 
+medical_device_f03_w2vlen_100_dlen_200_top = ['interpretation', 'arm', 'expression', 'formula', 'argument', 'relation', 'consequence', 'client', 'house', 'surface', 'supply', 'desktop', 'authority', 'software', 'society', 'presence', 'byte', 'science', 'combination', 'provider']
+medical_robot_f03_w2vlen_100_dlen_200_top = ['argument', 'expression', 'consequence', 'relation', 'institution', 'formula', 'respect', 'statement', 'father', 'ion', 'glass', 'partner', 'structure', 'laboratory', 'part', 'author', 'detector', 'message', 'sin', 'concept']
+sport_rehab_machine_f03_w2vlen_100_dlen_200_top = ['founder', 'argument', 'brother', 'end', 'michael', 'consequence', 'story', 'ray', 'respect', 'statement', 'lack', 'context', 'complexity', 'practice', 'opening', 'panel', 'bike', 'experience', 'stage', 'rail']
+
+#This file was used solely by AMT annotators
+#ALT_CS_MEN_f03_w2vlen_100_dlen_200_top = ['disk', 'room', 'expression', 'hull', 'reduction', 'option', 'bar', 'house', 'interpretation', 'argument', 'track', 'family', 'action', 'molecule', 'law', 'theory', 'life', 'production', 'source', 'tool']
+
+print('\nMechanical Turks\' Evaluation\n')
+
 print('CS SPO ' + str(compute_results_from_AMT(auto_list=CS_SPO_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-8.csv')))
-print('CS MEN ' + str(compute_results_from_AMT(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-9.csv')))
+print('CS MEN ' + str(compute_results_from_AMT(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-9.csv')))
 print('CS EEN ' + str(compute_results_from_AMT(auto_list=CS_EEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-10.csv')))
 print('CS MED ' + str(compute_results_from_AMT(auto_list=CS_MED_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-11.csv')))
+
+print('Medical device ' + str(compute_results_from_AMT(auto_list=medical_device_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-12.csv', in_score_a_column_idx=6, in_score_b_column_idx=8)))
+print('Medical robot ' + str(compute_results_from_AMT(auto_list=medical_robot_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-14.csv', in_score_a_column_idx=7, in_score_b_column_idx=9)))
+print('Sport rehab machine ' + str(compute_results_from_AMT(auto_list=sport_rehab_machine_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-13.csv', in_score_a_column_idx=8, in_score_b_column_idx=10)))
+
+print('\nAndrea\'s \& Alessio\'s Evaluation\n')
+
+print('CS SPO ' + str(compute_results(auto_list=CS_SPO_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/8a.csv', file_annotation_b='./Results-Alessio-10.10.18/8.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS MEN ' + str(compute_results(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/9a.csv', file_annotation_b='./Results-Alessio-10.10.18/9.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS EEN ' + str(compute_results(auto_list=CS_EEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/10a.csv', file_annotation_b='./Results-Alessio-10.10.18/10.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS MED ' + str(compute_results(auto_list=CS_MED_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/11a.csv', file_annotation_b='./Results-Alessio-10.10.18/11.csv',in_score_column_idx=3, in_term_column_idx=0)))
+
+print('Medical device ' + str(compute_results(auto_list=medical_device_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/12a.csv', file_annotation_b='./Results-Alessio-10.10.18/12.csv',in_score_column_idx=4, in_term_column_idx=0)))
+print('Medical robot ' + str(compute_results(auto_list=medical_robot_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/14a.csv', file_annotation_b='./Results-Alessio-10.10.18/14.csv',in_score_column_idx=5, in_term_column_idx=0)))
+print('Sport rehab machine ' + str(compute_results(auto_list=sport_rehab_machine_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/13a.csv', file_annotation_b='./Results-Alessio-10.10.18/13.csv',in_score_column_idx=6, in_term_column_idx=0)))
