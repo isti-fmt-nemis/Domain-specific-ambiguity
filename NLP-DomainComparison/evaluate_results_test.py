@@ -13,7 +13,7 @@ from validation.evaluate_results import build_automated_sets, \
     get_term_value_list_AMT, compute_score_overlap, reduce_score, \
     evaluate_results_top_bottom_optimistic, \
     evaluate_results_top_bottom_skip_ties, build_ground_truth_sets, \
-    evaluate_results_top_bottom_classification
+    evaluate_results_top_bottom_classification, evaluate_results_true_tau_b
 
 
 def compute_results(auto_list, set_separator_index, file_annotation_a, file_annotation_b, in_score_column_idx, in_term_column_idx):
@@ -35,6 +35,9 @@ def compute_results(auto_list, set_separator_index, file_annotation_a, file_anno
     scores_b = get_term_value_list(file_annotation_b, score_column_idx = in_score_column_idx)
 
     k_result = (cohen_kappa_score(scores_a, scores_b))
+    
+    print(evaluate_results_true_tau_b(dictionary_merge, auto_s))
+    
     
     return [k_result, tau_result_ties, tau_result_skip_ties] 
 
@@ -63,12 +66,8 @@ def compute_results_from_AMT(auto_list, set_separator_index, file_annotations, i
     scores_a = [convert_score(s) for s in scores_literal_a]
     scores_b = [convert_score(s) for s in scores_literal_b]
     k_result = cohen_kappa_score(scores_a, scores_b)
-    k_percent = compute_score_overlap(scores_a, scores_b)
     
-    scores_a_permissive = [reduce_score(s_a) for s_a in scores_a] 
-    scores_b_permissive = [reduce_score(s_b) for s_b in scores_b]
-    k_result_permissive = cohen_kappa_score(scores_a_permissive, scores_b_permissive)
-    k_permissive_percent = compute_score_overlap(scores_a_permissive, scores_b_permissive)
+    print(evaluate_results_true_tau_b(dictionary_merge, auto_s))
     
     return [k_result, tau_result_ties, tau_result_skip_ties]
 
