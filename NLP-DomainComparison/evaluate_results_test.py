@@ -53,9 +53,6 @@ def compute_results_from_AMT(auto_list, set_separator_index, file_annotations, i
         dictionary_merge[k] = np.mean([dictionary_a[k],dictionary_b[k]]) 
     ground_truth_rank = sorted(dictionary_merge, key=dictionary_merge.get, reverse=True)
     
-#     ground_sets = build_ground_truth_sets(dictionary_merge, 3)
-#     [p, r] = evaluate_results_top_bottom_classification(ground_sets, auto_s)
-    
     tau_result = evaluate_results_top_bottom_rank(ground_truth_ranked_list=ground_truth_rank, auto_sets=auto_s)
     tau_result_ties = evaluate_results_top_bottom_optimistic(dictionary_merge, auto_s)
     tau_result_skip_ties = evaluate_results_top_bottom_skip_ties(dictionary_merge, auto_s)
@@ -71,28 +68,6 @@ def compute_results_from_AMT(auto_list, set_separator_index, file_annotations, i
     
     return [k_result, tau_result_ties, tau_result_skip_ties]
 
-        
-
-# auto_list_1 = ['institute', 'theory', 'environment', 'distance', 'matrix', 'length', 'release', 'tool', 'law', 'frequency', 'business', 'distribution', 'output', 'issue', 'component', 'team', 'machine', 'concept', 'performance', 'approach']
-# print(compute_results(auto_list=auto_list_1, set_separator_index=10, file_annotation_a='./validation/1_a.csv', file_annotation_b='./validation/1_b.csv', in_score_column_idx=3, in_term_column_idx=0))
-# auto_list_7 = ['environment', 'board', 'table', 'law', 'institute', 'value', 'pattern', 'surface', 'tool', 'chemical', 'area', 'server', 'heat', 'rule', 'solution', 'range', 'condition', 'issue', 'user', 'report']
-# print(compute_results(auto_list=auto_list_7, set_separator_index=10, file_annotation_a='./validation/7_a.csv', file_annotation_b='./validation/7_b.csv', in_score_column_idx=5, in_term_column_idx=0))
-# 
-# auto_list_1_trick = ['frequency', 'length', 'matrix', 'institute', 'release', 'tool', 'environment', 'law', 'theory', 'distance', 'problem', 'time', 'space', 'range', 'state', 'term', 'cost', 'year', 'example', 'test']
-# print(compute_results(auto_list=auto_list_1_trick, set_separator_index=10, file_annotation_a='./validation/100_a.csv', file_annotation_b='./validation/100_b.csv', in_score_column_idx=3, in_term_column_idx=0))
-# 
-# auto_list_1_min_freq = ['hull', 'bar', 'room', 'option', 'argument', 'reduction', 'disk', 'interpretation', 'expression', 'house', 'year', 'link', 'phase', 'film', 'block', 'customer', 'transfer', 'order', 'report', 'distance']
-# print(compute_results(auto_list=auto_list_1_min_freq, set_separator_index=10, file_annotation_a='./validation/101_a.csv', file_annotation_b='./validation/101_b.csv', in_score_column_idx=3, in_term_column_idx=0))
-# print(compute_results_from_AMT(auto_list=auto_list_1_min_freq, set_separator_index=10, file_annotations='./validation/AMT_results.csv'))
-#       
-# auto_list_12 = ['interpretation', 'arm', 'expression', 'formula', 'argument', 'relation', 'consequence', 'client', 'house', 'surface', 'supply', 'desktop', 'authority', 'software', 'society', 'presence', 'byte', 'science', 'combination', 'provider']
-# print(compute_results(auto_list=auto_list_12, set_separator_index=10, file_annotation_a='./validation/12.csv', file_annotation_b='./validation/12.csv', in_score_column_idx=4, in_term_column_idx=0))      
-#       
-# auto_list_13 = ['founder', 'argument', 'brother', 'end', 'michael', 'consequence', 'story', 'ray', 'respect', 'statement', 'lack', 'context', 'complexity', 'practice', 'opening', 'panel', 'bike', 'experience', 'stage', 'rail']
-# print(compute_results(auto_list=auto_list_13, set_separator_index=10, file_annotation_a='./validation/13.csv', file_annotation_b='./validation/13.csv', in_score_column_idx=6, in_term_column_idx=0))      
-
-# auto_list_14 = ['argument', 'expression', 'consequence', 'relation', 'institution', 'formula', 'respect', 'statement', 'father', 'ion', 'glass', 'partner', 'structure', 'laboratory', 'part', 'author', 'detector', 'message', 'sin', 'concept']
-# print(compute_results(auto_list=auto_list_14, set_separator_index=10, file_annotation_a='./validation/14.csv', file_annotation_b='./validation/14.csv', in_score_column_idx=5, in_term_column_idx=0))
 
 CS_EEN_f03_w2vlen_100_dlen_200_top = ['interpretation', 'formula', 'flash', 'relation', 'motor', 'bell', 'studio', 'contact', 'surface', 'news', 'capacity', 'solution', 'law', 'period', 'transfer', 'force', 'cycle', 'mapping', 'layer', 'output']
 CS_MEN_f03_w2vlen_100_dlen_200_top = ['hull', 'bar', 'room', 'option', 'argument', 'reduction', 'disk', 'interpretation', 'expression', 'house', 'year', 'link', 'phase', 'film', 'block', 'customer', 'transfer', 'order', 'report', 'distance']
@@ -102,9 +77,6 @@ CS_SPO_f03_w2vlen_100_dlen_200_top = ['formula', 'loop', 'reduction', 'michael',
 medical_device_f03_w2vlen_100_dlen_200_top = ['interpretation', 'arm', 'expression', 'formula', 'argument', 'relation', 'consequence', 'client', 'house', 'surface', 'supply', 'desktop', 'authority', 'software', 'society', 'presence', 'byte', 'science', 'combination', 'provider']
 medical_robot_f03_w2vlen_100_dlen_200_top = ['argument', 'expression', 'consequence', 'relation', 'institution', 'formula', 'respect', 'statement', 'father', 'ion', 'glass', 'partner', 'structure', 'laboratory', 'part', 'author', 'detector', 'message', 'sin', 'concept']
 sport_rehab_machine_f03_w2vlen_100_dlen_200_top = ['founder', 'argument', 'brother', 'end', 'michael', 'consequence', 'story', 'ray', 'respect', 'statement', 'lack', 'context', 'complexity', 'practice', 'opening', 'panel', 'bike', 'experience', 'stage', 'rail']
-
-#This file was used solely by AMT annotators
-#ALT_CS_MEN_f03_w2vlen_100_dlen_200_top = ['disk', 'room', 'expression', 'hull', 'reduction', 'option', 'bar', 'house', 'interpretation', 'argument', 'track', 'family', 'action', 'molecule', 'law', 'theory', 'life', 'production', 'source', 'tool']
 
 print('\nMechanical Turks\' Evaluation\n')
 

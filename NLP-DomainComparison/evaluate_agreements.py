@@ -64,9 +64,6 @@ def rebase_scores(list_a, list_b, unit=1):
     out_list_final_a = []
     out_list_final_b = []
     
-    #This reduces the problem to a two-class problem, otherwise
-    #it appears as a three class problem, which is not what we want  
-    
     half_agree_counter = 0         
     for a,b in zip(out_list_a, out_list_b):
         if a == 'a':
@@ -126,37 +123,6 @@ def compute_agreement_AMT(file_annotations, in_score_a_column_idx=5, in_score_b_
     k_permissive_percent = len([(x,y) for x, y in zip(scores_a_rebased, scores_b_rebased) if x == y]) / len(scores_a_rebased)
     
     return k_result, k_percent, k_permissive, k_permissive_percent
-
-# '''
-# Compute the overall agreement among annotators. To do so, we need to first search for the specific sentence sets
-# in the amazon mechanical turk files. I first take two files, and check whether each sentence couple has
-# a corresponding one in the other file.
-# '''
-# def check_overall_agreement():
-#     res_1 = './Results-Andrea-10.10.18/8a.csv'
-#     res_AMT = './Results-AMT-9.10.18/res-8.csv'
-#     
-#     with open(res_AMT, mode='r', encoding='utf-8') as infile:
-#         reader = list(csv.reader(infile))[1:]
-#         sents_1 = [rows[2] for rows in reader]
-#         sents_2 = [rows[3] for rows in reader]
-#     
-#     pair_list_AMT = [(s1, s2) for s1, s2 in zip(sents_1, sents_2)]
-#     
-#     with open(res_1, mode='r', encoding='utf-8') as infile:
-#         reader = list(csv.reader(infile))
-#         sents_1 = [rows[1] for rows in reader]
-#         sents_2 = [rows[2] for rows in reader]
-#     
-#     pair_list_Andrea =  [(s1, s2) for s1, s2 in zip(sents_1, sents_2)]
-#     
-#     count_match = 0
-#     for p_AMT in pair_list_AMT:
-#         for p_A in pair_list_Andrea:
-#             if p_AMT == p_A:
-#                 count_match += 1
-#                 
-#     print(count_match)
 
 
 print('\nAndrea\'s \& Alessio\'s Evaluation\n')
