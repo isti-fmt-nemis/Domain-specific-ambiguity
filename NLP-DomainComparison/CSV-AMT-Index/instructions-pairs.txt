@@ -1,0 +1,57 @@
+In this task, you are presented with a term and two sentences that include the term. 
+
+You should judge whether the term is used with the same meaning in the two sentences, or if it is used with different meanings. 
+
+Please provide your categorization by answering the question:
+
+"Is the term used with the same meaning in the following sentences?"
+
+Below, examples are provided for the possible categories. Please notice that a validation set will be used to check the quality of your answers.
+
+-------------------------------------
+
+Example - Exactly the same
+
+Term: room
+
+Sentence A: Finding room for the KY-28 in fighter aircraft was difficult.
+
+Sentence B: In naval architecture, stowage is the amount of room available for stowing materials aboard a ship, tank or an airplane.
+
+Category: Exactly the same
+
+-------------------------------------
+
+Example - Almost the same
+
+Term: transfer
+
+Sentence A: Topics covered include knowledge assets and management, new product introduction and transfer of technology.
+
+Sentence B: Knowledge transfer is the practical problem of transferring knowledge from one part of the organization to another.
+
+Category: Almost the same
+
+-------------------------------------
+
+Example - Somewhat different
+
+Term: reduction
+
+Sentence A: Her research takes a statistical approach to kernel methods, dimensionality reduction, and regularization in machine learning.
+
+Sentence B: A reduction drive is a mechanical device to shift rotational speed.
+
+Category: Somewhat different
+
+-------------------------------------
+
+Example - Extremely different
+
+Term: expression
+
+Sentence A:  Modern devices may potentially allow computer related devices to respond to an individuals hand gesture, specific movement or facial expression.
+
+Sentence B: This expression can be further integrated to obtain the position r of the particle as a function of time.
+
+Category: Extremely different
