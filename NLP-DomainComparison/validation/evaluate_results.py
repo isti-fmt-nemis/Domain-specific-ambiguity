@@ -21,12 +21,13 @@ from __future__ import division
 
 from _collections import defaultdict
 import csv
+import operator
 from pprint import pprint
 from random import sample
-import operator
+
+import scipy.stats
 
 import numpy as np
-from boto.sdb.db.sequence import double
 
 
 evaluation_dictionary_AMT = {'exactly the same':1,
@@ -106,6 +107,26 @@ def evaluate_results_top_bottom_skip_ties(ground_truth_dictionary, auto_sets):
     tau_value = c_amb / c_pairs 
         
     return tau_value
+
+def evaluate_results_true_tau_b(ground_truth_dictionary, auto_sets):
+    ambiguous_set = auto_sets[0]
+    non_ambiguous_set = auto_sets[1]
+    
+    dict_auto = dict()
+    for elem in ambiguous_set:
+        dict_auto[elem] = 1
+    for elem in non_ambiguous_set:
+        dict_auto[elem] = -1
+    
+    weight_auto = []
+    weight_ground = []
+    
+    for k in dict_auto.keys(): 
+        weight_auto.append(dict_auto[k])
+        weight_ground.append(ground_truth_dictionary[k])
+    
+    return scipy.stats.kendalltau(weight_auto, weight_ground)
+    
 
 '''
 This function evaluates precision and recall, treating the problem as a classification problem
@@ -252,9 +273,6 @@ def compute_score_overlap(list_a, list_b):
     
     return count/len(list_a)
     
-
-
-
 
 
 
