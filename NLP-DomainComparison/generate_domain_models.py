@@ -24,10 +24,10 @@ LEMMATIZER = WordNetLemmatizer()
 if __name__ == '__main__':
     corpora = [subdirs for subdirs, dirs, files in os.walk(CORPORA_DIR)]
     for corpus in corpora[1:]:
-        print "training model on" + corpus
+        print("training model on" + corpus)
         model = vectorization.train_model_on_dir(corpus, LANGUAGE, LEMMATIZER, SIZE, WINDOW, MIN_COUNT, ITER)
-        print "model trained, saving it"
+        print("model trained, saving it")
         MODEL_NAME = os.path.basename(os.path.normpath(corpus)) + ".bin"
         model.save(os.path.join(MODEL_PATH, MODEL_NAME))
-        print "done\n\n"
+        print("done\n\n")
 

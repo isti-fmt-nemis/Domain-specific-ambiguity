@@ -24,6 +24,7 @@ import csv
 import operator
 from pprint import pprint
 from random import sample
+from numpy.ma.core import fabs
 
 import scipy.stats
 
@@ -273,7 +274,44 @@ def compute_score_overlap(list_a, list_b):
     
     return count/len(list_a)
     
-
+'''
+For each couple in the list if the elements of the couple differ by a value
+that is <= unit, the elements are considered equal. 
+'''
+def rebase_scores(list_a, list_b, unit=1):
+    out_list_a = [0] * len(list_a)
+    out_list_b = [0] * len(list_b)
+    
+    len_agree = 0
+    for i,s in enumerate(list_a):
+        if fabs(s - list_b[i]) <= 1:
+            out_list_a[i] = 'a'
+            out_list_b[i] = 'a'
+            len_agree += 1 
+        else:
+            out_list_a[i] = 'b'
+            out_list_b[i] = 'c'
+    
+    
+    out_list_final_a = []
+    out_list_final_b = []
+    
+    half_agree_counter = 0         
+    for a,b in zip(out_list_a, out_list_b):
+        if a == 'a':
+            if half_agree_counter < len_agree/2: 
+                out_list_final_a.append('b')
+                out_list_final_b.append('b')
+            else:
+                out_list_final_a.append('c')
+                out_list_final_b.append('c')
+            half_agree_counter +=1    
+        else:
+            out_list_final_a.append(a)
+            out_list_final_b.append(b)
+                    
+            
+    return out_list_final_a, out_list_final_b
 
 
 

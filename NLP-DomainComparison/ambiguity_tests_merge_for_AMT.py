@@ -7,8 +7,6 @@ from gensim.models.word2vec import Word2Vec
 
 import domain_analysis.ambiguity as ambiguity
 
-from validation import evaluate_results
-
 
 MODEL_PATH = "./MODELS"
 
@@ -21,9 +19,9 @@ models['ele'] = Word2Vec.load(os.path.join(MODEL_PATH, "Electronic_Engineering_D
 models['mec'] = Word2Vec.load(os.path.join(MODEL_PATH, "Mechanical_Engineering_D_2.bin"))
 models['lit'] = Word2Vec.load(os.path.join(MODEL_PATH, "Literature_D_2.bin"))
 
-min_freq_ratios = [0.3]#[0.1, 0.3, 0.5]
-w2v_topn_values = [100]#[50, 100, 300, 500]
-shared_word_counts = [200]#[100, 200, 500]
+min_freq_ratios = [0.3]
+w2v_topn_values = [100]
+shared_word_counts = [200]
 
 top_words_num = 10
 sample_size = 10
@@ -47,10 +45,5 @@ for scenario_name in scenarios:
                 ambiguous = ambiguity.ambiguity_mse_rank_merge(scenarios[scenario_name], min_freq_ratio, shared_word_count, w2v_topn_value)
                 print(scenario_name + '\n')
                 pprint([(term, mse, count) for (_, term, _, mse, count) in ambiguous], width=200)
-#                 ranked_sample_top = evaluate_results.generate_ranked_sample_top(top_words_num, sample_size, ambiguous)
-#                 terms_sample_top = [term for (_, term, _, _, _) in ranked_sample_top]
-#             
-#                 print(scenario_name + '_f0' + str(min_freq_ratio).split('.')[-1] + '_w2vlen_' + str(w2v_topn_value) + '_dlen_' + str(shared_word_count) + '_top = ' + str(terms_sample_top))
-
     
 
