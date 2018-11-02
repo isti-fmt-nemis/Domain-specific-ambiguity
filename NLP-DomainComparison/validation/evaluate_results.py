@@ -3,19 +3,8 @@ Created on Sep 21, 2018
 
 @author: alessioferrari
 
-This module includes all the methods to evaluate the results of the AMT task with
-respect to the ranked lists of terms. Different types of evaluation can be performed.
-
-- precision/recall: we evaluate whether words that are ranked top by the algorithm
-(i.e., highly ambiguous) are also ranked top by the raters, and whether words that
-are ranked bottom by the algorithm (i.e., low degree of ambiguity) are also ranked
-bottom by the raters.
- 
-- pearson's correlation coefficient: we evaluate the correlation between the position
-of the top ambiguous words and their ambiguity evaluation score. This somehow suggests
-the validation of the ambiguity score, rather than the list.
-
-- tau-b: enables the comparison between the human vs machine ranking.  
+This module includes all the methods to evaluate the results of with
+respect to the ranked lists of terms.
 '''
 from __future__ import division
 
@@ -36,57 +25,6 @@ evaluation_dictionary_AMT = {'exactly the same':1,
                          'somewhat different':3,
                          'extremely different':4}
 
-''''
-This function evaluates the results as a ranking with ties. Given the auto_sets,
-and the ground_truth_ranked_list coming from the annotation, for each element in the ambiguous set 
-in the auto_sets, it computes how many elements of the non-ambiguous set follows 
-the specific element of the ambiguous set. Then, it sums-up the contribution
-for each element of the ambiguous set, and computes the final evaluation value 
-by dividing for the product of the sizes of the non-ambiguous set and ambiguous set. 
-'''
-
-def evaluate_results_top_bottom_rank(ground_truth_ranked_list, auto_sets):
-    ambiguous_set = auto_sets[0]
-    non_ambiguous_set = auto_sets[1]
-    
-    c_amb = 0
-    
-    for ambiguous_term in ambiguous_set:
-        followers = ground_truth_ranked_list[ground_truth_ranked_list.index(ambiguous_term):]
-        c_amb = c_amb + len(set(followers).intersection(set(non_ambiguous_set)))
-        
-    tau_value = c_amb / (len(ambiguous_set)*len(non_ambiguous_set)) 
-        
-    return tau_value
-
-def evaluate_results_top_bottom_optimistic(ground_truth_dictionary, auto_sets):
-    ambiguous_set = auto_sets[0]
-    non_ambiguous_set = auto_sets[1]
-    
-    #create tuples that are ordered based on the score
-    sorted_elems = []
-    ground_truth_rank = sorted(ground_truth_dictionary, key=ground_truth_dictionary.get, reverse=True)
-    
-    for item in ground_truth_rank:
-        if item in ambiguous_set:
-            sorted_elems.append([item, ground_truth_dictionary[item], 0])
-        else:
-            sorted_elems.append([item, ground_truth_dictionary[item], 1])
-            
-                
-    dict_ties = defaultdict(list)
-    for [term, value, amb] in sorted_elems:
-        dict_ties[value].append([term, value, amb])
-    
-    
-    for key in dict_ties.keys():
-        dict_ties[key].sort(key=lambda x: x[2])
-    
-    sorted_dict = sorted(dict_ties.items(), key=operator.itemgetter(0), reverse=True)
-    sorted_list = [item for (val, item) in sorted_dict]       
-    ranked_list = [word for item_list in sorted_list for [word, _, _] in item_list]                 
-
-    return evaluate_results_top_bottom_rank(ranked_list, auto_sets) 
     
 def evaluate_results_top_bottom_skip_ties(ground_truth_dictionary, auto_sets):
     ambiguous_set = auto_sets[0]
@@ -109,42 +47,8 @@ def evaluate_results_top_bottom_skip_ties(ground_truth_dictionary, auto_sets):
         
     return tau_value
 
-def evaluate_results_true_tau_b(ground_truth_dictionary, auto_sets):
-    ambiguous_set = auto_sets[0]
-    non_ambiguous_set = auto_sets[1]
-    
-    dict_auto = dict()
-    for elem in ambiguous_set:
-        dict_auto[elem] = 1
-    for elem in non_ambiguous_set:
-        dict_auto[elem] = -1
-    
-    weight_auto = []
-    weight_ground = []
-    
-    for k in dict_auto.keys(): 
-        weight_auto.append(dict_auto[k])
-        weight_ground.append(ground_truth_dictionary[k])
-    
-    return scipy.stats.kendalltau(weight_auto, weight_ground)
     
 
-'''
-This function evaluates precision and recall, treating the problem as a classification problem
-'''
-def evaluate_results_top_bottom_classification(ground_truth_sets, auto_sets):
-    
-    if len(auto_sets[0]) != 0:
-        precision = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(auto_sets[0])
-    else:
-        precision = float(1)
-    
-    if len(ground_truth_sets[0]) != 0:
-        recall = len(auto_sets[0].intersection(ground_truth_sets[0])) / len(ground_truth_sets[0])
-    else:
-        recall = float(1)
-    
-    return [precision, recall]
 
 '''
 Given the ordered list of terms to consider, builds the automated sets to be used

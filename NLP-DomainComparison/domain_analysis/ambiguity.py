@@ -1,5 +1,6 @@
-import spacy
 import itertools
+
+import spacy
 
 import numpy as np
 
@@ -46,7 +47,6 @@ def get_frequent_shared_words_spacy(domains, size=100):
                 to_remove.add(word)
         common.difference_update(to_remove)
         if len(common) >= size or head >= min_vocab_size:
-            # print(head)
             return common
         head += 1
 
@@ -139,9 +139,8 @@ def ambiguity_mse_rank_multi(domains, vocab_size=100, w2v_topn=100):
     return sorted(by_word.values(), key=lambda x: -x[3])
 
 
-def ambiguity_mse_rank_main_domain(main_domain, domains, min_freq_ratio = 0.5, vocab_size=200, w2v_topn=1000):
-    # words = get_frequent_words_spacy(main_domain, vocab_size)
-    words = get_min_freq_words_spacy(main_domain, 800)
+def ambiguity_mse_rank_main_domain(main_domain, domains, min_freq_ratio = 0.5, vocab_size=200, w2v_topn=1000, min_freq_main =800):
+    words = get_min_freq_words_spacy(main_domain, min_freq_main)
     output = list()
     for word in words:
         word_freq = main_domain.wv.vocab[word].count

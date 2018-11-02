@@ -3,14 +3,6 @@ Created on Oct 1, 2018
 
 @author: alessioferrari
 '''
-'''
-@param words: words for which the file shall be generated
-@param domains: 
-@param sent_num: number of sentences for each word
-@param file_name: output file name
-'''
-
-
 
 import csv
 import datetime
@@ -22,9 +14,7 @@ from validation import inverted_index
 def get_random_sentence_index_caller(term, path_to_files, index_pkl):
     s = inverted_index.get_random_sentence_index(term, path_to_files, index_pkl)
     return s
-
-                
-                
+              
 def generate_CSV_from_index(words, in_domains, sent_num, file_name):
     
     '''

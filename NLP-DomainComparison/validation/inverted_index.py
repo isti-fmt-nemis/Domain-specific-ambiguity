@@ -5,6 +5,7 @@ Created on Oct 1, 2018
 
 This module includes the methods to create an inverted index from 
 the different domain documents, given a domain folder with .txt documents.
+This is used to generate random sentences for evaluation
 '''
 
 '''
@@ -82,12 +83,6 @@ def get_random_sentence_index(term, in_folder, in_inv_index):
             break
     
     return s 
-
-    
-    
-#create_index("../DATASETS/Computer_Science_D_2", "CS_dictionary.pkl")
-#load_index("CS_dictionary.pkl")
-#s = get_random_sentence_index("hash", "../DATASETS/Computer_Science_D_2", "CS_dictionary.pkl")
 
 
     

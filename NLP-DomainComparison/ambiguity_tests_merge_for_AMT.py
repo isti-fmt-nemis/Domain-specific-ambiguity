@@ -1,3 +1,8 @@
+'''
+This module generates the lists of terms, ranked by their ambiguity score 
+'''
+
+
 from __future__ import division
 
 from os.path import os
@@ -6,6 +11,7 @@ from pprint import pprint
 from gensim.models.word2vec import Word2Vec
 
 import domain_analysis.ambiguity as ambiguity
+
 
 
 MODEL_PATH = "./MODELS"
@@ -17,7 +23,6 @@ models['med'] = Word2Vec.load(os.path.join(MODEL_PATH, "Medicine_D_2.bin"))
 models['sport'] = Word2Vec.load(os.path.join(MODEL_PATH, "Sports_D_2.bin"))
 models['ele'] = Word2Vec.load(os.path.join(MODEL_PATH, "Electronic_Engineering_D_2.bin"))
 models['mec'] = Word2Vec.load(os.path.join(MODEL_PATH, "Mechanical_Engineering_D_2.bin"))
-models['lit'] = Word2Vec.load(os.path.join(MODEL_PATH, "Literature_D_2.bin"))
 
 min_freq_ratios = [0.3]
 w2v_topn_values = [100]
