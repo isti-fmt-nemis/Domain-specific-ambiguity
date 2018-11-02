@@ -59,25 +59,25 @@ def compute_agreement_AMT(file_annotations, in_score_a_column_idx=5, in_score_b_
 
 print('\nAndrea\'s \& Alessio\'s Evaluation\n')
    
-print('Embedded Light Controller ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/10a.csv', file_annotation_b='./Results-Alessio-10.10.18/10.csv',in_score_column_idx=3)))
-print('CAD for Mechanical Components ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/9a.csv', file_annotation_b='./Results-Alessio-10.10.18/9.csv',in_score_column_idx=3)))
-print('Medical Software ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/11a.csv', file_annotation_b='./Results-Alessio-10.10.18/11.csv',in_score_column_idx=3)))
-print('Athletes Network ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/8a.csv', file_annotation_b='./Results-Alessio-10.10.18/8.csv',in_score_column_idx=3)))
+print('Embedded Light Controller ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/10.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/10.csv',in_score_column_idx=3)))
+print('CAD for Mechanical Components ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/9.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/9.csv',in_score_column_idx=3)))
+print('Medical Software ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/11.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/11.csv',in_score_column_idx=3)))
+print('Athletes Network ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/8.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/8.csv',in_score_column_idx=3)))
  
-print('Medical device ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/12a.csv', file_annotation_b='./Results-Alessio-10.10.18/12.csv',in_score_column_idx=4)))
-print('Medical robot ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/14a.csv', file_annotation_b='./Results-Alessio-10.10.18/14.csv',in_score_column_idx=5)))
-print('Sport rehab machine ' + str(compute_agreement(file_annotation_a='./Results-Andrea-10.10.18/13a.csv', file_annotation_b='./Results-Alessio-10.10.18/13.csv',in_score_column_idx=6)))
+print('Medical device ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/12.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/12.csv',in_score_column_idx=4)))
+print('Medical robot ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/14.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/14.csv',in_score_column_idx=5)))
+print('Sport rehab machine ' + str(compute_agreement(file_annotation_a='./GROUND-TRUTH/Results-Andrea/13.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/13.csv',in_score_column_idx=6)))
 
 print('\nMechanical Turks\' Evaluation\n')
 
-print('Embedded Light Controller ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-9.10.18/res-10.csv')))
-print('CAD for Mechanical Components ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-11.10.18/res-9.csv')))
-print('Medical Software ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-9.10.18/res-11.csv')))
-print('Athletes Network ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-9.10.18/res-8.csv')))
+print('Embedded Light Controller ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/10.csv')))
+print('CAD for Mechanical Components ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/9.csv')))
+print('Medical Software ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/11.csv')))
+print('Athletes Network ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/8.csv')))
  
-print('Medical device ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-11.10.18/res-12.csv', in_score_a_column_idx=6, in_score_b_column_idx=8)))
-print('Medical robot ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-11.10.18/res-14.csv', in_score_a_column_idx=7, in_score_b_column_idx=9)))
-print('Sport rehab machine ' + str(compute_agreement_AMT(file_annotations='./Results-AMT-11.10.18/res-13.csv', in_score_a_column_idx=8, in_score_b_column_idx=10)))
+print('Medical device ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/12.csv', in_score_a_column_idx=6, in_score_b_column_idx=8)))
+print('Medical robot ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/14.csv', in_score_a_column_idx=7, in_score_b_column_idx=9)))
+print('Sport rehab machine ' + str(compute_agreement_AMT(file_annotations='./GROUND-TRUTH/Results-MTurks/13.csv', in_score_a_column_idx=8, in_score_b_column_idx=10)))
    
 
 

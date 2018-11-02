@@ -48,23 +48,23 @@ sport_rehab_machine_f03_w2vlen_100_dlen_200_top = ['founder', 'argument', 'broth
 
 print('\nAndrea\'s \& Alessio\'s Evaluation\n')
 
-print('CS SPO ' + str(compute_results(auto_list=CS_SPO_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/8a.csv', file_annotation_b='./Results-Alessio-10.10.18/8.csv',in_score_column_idx=3, in_term_column_idx=0)))
-print('CS MEN ' + str(compute_results(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/9a.csv', file_annotation_b='./Results-Alessio-10.10.18/9.csv',in_score_column_idx=3, in_term_column_idx=0)))
-print('CS EEN ' + str(compute_results(auto_list=CS_EEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/10a.csv', file_annotation_b='./Results-Alessio-10.10.18/10.csv',in_score_column_idx=3, in_term_column_idx=0)))
-print('CS MED ' + str(compute_results(auto_list=CS_MED_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/11a.csv', file_annotation_b='./Results-Alessio-10.10.18/11.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS SPO ' + str(compute_results(auto_list=CS_SPO_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/8.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/8.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS MEN ' + str(compute_results(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/9.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/9.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS EEN ' + str(compute_results(auto_list=CS_EEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/10.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/10.csv',in_score_column_idx=3, in_term_column_idx=0)))
+print('CS MED ' + str(compute_results(auto_list=CS_MED_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/11.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/11.csv',in_score_column_idx=3, in_term_column_idx=0)))
 
-print('Medical device ' + str(compute_results(auto_list=medical_device_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/12a.csv', file_annotation_b='./Results-Alessio-10.10.18/12.csv',in_score_column_idx=4, in_term_column_idx=0)))
-print('Medical robot ' + str(compute_results(auto_list=medical_robot_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/14a.csv', file_annotation_b='./Results-Alessio-10.10.18/14.csv',in_score_column_idx=5, in_term_column_idx=0)))
-print('Sport rehab machine ' + str(compute_results(auto_list=sport_rehab_machine_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./Results-Andrea-10.10.18/13a.csv', file_annotation_b='./Results-Alessio-10.10.18/13.csv',in_score_column_idx=6, in_term_column_idx=0)))
+print('Medical device ' + str(compute_results(auto_list=medical_device_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/12.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/12.csv',in_score_column_idx=4, in_term_column_idx=0)))
+print('Medical robot ' + str(compute_results(auto_list=medical_robot_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/14.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/14.csv',in_score_column_idx=5, in_term_column_idx=0)))
+print('Sport rehab machine ' + str(compute_results(auto_list=sport_rehab_machine_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotation_a='./GROUND-TRUTH/Results-Andrea/13.csv', file_annotation_b='./GROUND-TRUTH/Results-Alessio/13.csv',in_score_column_idx=6, in_term_column_idx=0)))
 
 print('\nMechanical Turks\' Evaluation\n')
 
-print('CS SPO ' + str(compute_results_from_AMT(auto_list=CS_SPO_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-8.csv')))
-print('CS MEN ' + str(compute_results_from_AMT(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-9.csv')))
-print('CS EEN ' + str(compute_results_from_AMT(auto_list=CS_EEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-10.csv')))
-print('CS MED ' + str(compute_results_from_AMT(auto_list=CS_MED_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-9.10.18/res-11.csv')))
+print('CS SPO ' + str(compute_results_from_AMT(auto_list=CS_SPO_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/8.csv')))
+print('CS MEN ' + str(compute_results_from_AMT(auto_list=CS_MEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/9.csv')))
+print('CS EEN ' + str(compute_results_from_AMT(auto_list=CS_EEN_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/10.csv')))
+print('CS MED ' + str(compute_results_from_AMT(auto_list=CS_MED_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/11.csv')))
 
-print('Medical device ' + str(compute_results_from_AMT(auto_list=medical_device_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-12.csv', in_score_a_column_idx=6, in_score_b_column_idx=8)))
-print('Medical robot ' + str(compute_results_from_AMT(auto_list=medical_robot_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-14.csv', in_score_a_column_idx=7, in_score_b_column_idx=9)))
-print('Sport rehab machine ' + str(compute_results_from_AMT(auto_list=sport_rehab_machine_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./Results-AMT-11.10.18/res-13.csv', in_score_a_column_idx=8, in_score_b_column_idx=10)))
+print('Medical device ' + str(compute_results_from_AMT(auto_list=medical_device_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/12.csv', in_score_a_column_idx=6, in_score_b_column_idx=8)))
+print('Medical robot ' + str(compute_results_from_AMT(auto_list=medical_robot_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/14.csv', in_score_a_column_idx=7, in_score_b_column_idx=9)))
+print('Sport rehab machine ' + str(compute_results_from_AMT(auto_list=sport_rehab_machine_f03_w2vlen_100_dlen_200_top, set_separator_index=10, file_annotations='./GROUND-TRUTH/Results-MTurks/13.csv', in_score_a_column_idx=8, in_score_b_column_idx=10)))
 
