@@ -7,7 +7,7 @@ The project includes three packages:
 
 1. domain_analysis: includes utilities to get statistics and manipulate the domain files.
 2. vector_comparison: includes the utilities to build the word embeddings.
-3. validation: includes files to evaluate the results
+3. validation: includes files to evaluate the results.
 
 
 
